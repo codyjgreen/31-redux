@@ -1,23 +1,15 @@
+export const CATEGORY_CREATE = 'CATEGORY_CREATE';
+export const CATEGORY_UPDATE= 'CATEGORY_UPDATE';
+export const CATEGORY_DESTROY = 'CATEGORY_DESTROY';
 
-//example from counter app
+export function create() {
+	return {type: CATEGORY_CREATE, category}
+}
 
-// export const INCREMENT = 'INCREMENT';
-// export const DECREMENT = 'DECREMENT';
-// export const INCREMENT_BY = 'INCREMENT_BY';
-// export const DECREMENT_BY = 'DECREMENT_BY';
+export function update() {
+	return {type: CATEGORY_update, category}
+}
 
-// export function increment() {
-// 	return {type: INCREMENT}
-// }
-
-// export function decrement() {
-// 	return {type: DECREMENT}
-// }
-
-// export function incrementBy(value) {
-// 	return {type: INCREMENT_BY, value}
-// }
-
-// export function decrementBy(value) {
-// 	return {type: DECREMENT_BY, value}
-// }
+export function destroy() {
+	return {type: CATEGORY_destroy, category}
+}
