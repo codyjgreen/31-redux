@@ -1,39 +1,50 @@
-
-//example from counter-app
-
-
-// import {
-//     INCREMENT,
-//     DECREMENT,
-//     INCREMENT_BY,
-//     DECREMENT_BY
-//   } from '../actions/counter-actions';
+import {
+    CATEGORY_CREATE,
+    CATEGORY_UPDATE,
+    CATEGORY_DESTROY,
+  } from '../actions/category-actions.js';
+  import uuidv1 from 'uuid/v1';
   
-//   const initialState = {
-//     appName: 'Counting',
-//     data: 0,
-//     // other state data that may not even necessarily be accessed
-//     // by the component we're using.
-//     dateCreated: new Date(),
-//     otherData: [{}, {}, {}],
-//     id: 'sdfgfsdgfasdfgfdgdf'
-//   };
+  const initialState = {
+    categories: [],
+  }
   
-//   export default function counterReducer(state, action) {
-//     if (state === undefined) {
-//       return initialState;
-//     }
+  export default function categoryReducer(state, action) {
+    if (state === undefined) {
+      return initialState;
+    }
   
-//     let newState = {};
-//     switch(action.type) {
-//       case INCREMENT:
-//         return Object.assign(newState, state, {data: state.data + 1});
-//       case DECREMENT:
-//         return Object.assign(newState, state, {data: state.data - 1});
-//       case INCREMENT_BY:
-//         return Object.assign(newState, state, {data: state.data + action.value});
-//       case DECREMENT_BY:
-//         return Object.assign(newState, state, {data: state.data - action.value});
-//       default: return state;
-//     }
-//   }
+    let newState = {};
+    let currentCategories;
+    let categoryIndex;
+  
+    switch(action.type) {
+      case CATEGORY_CREATE:
+        currentCategories = state.categories.slice();
+        let newCategory = Object.assign({}, {id: uuidv1(), isEditing: false}, action.value);
+        currentCategories.push(newCategory);
+        return Object.assign(newState, state, {categories: currentCategories});
+      case CATEGORY_UPDATE:
+        currentCategories = state.categories.slice();
+        let categoryToUpdate = currentCategories.find(category => {
+          return category.id === action.values.id;
+         });
+        categoryIndex = currentCategories.indexOf(categoryToUpdate);
+        currentCategories[categoryIndex].isEditing = !currentCategories[categoryIndex].isEditing;
+        if (action.values.name) {
+          currentCategories[categoryIndex].name = action.values.name;
+        }
+        if (action.values.budget) {
+          currentCategories[categoryIndex].budget = action.values.budget;
+        }
+        return Object.assign(newState, state, {categories: currentCategories});
+      case CATEGORY_DESTROY:
+        currentCategories = state.categories.slice();
+        let categoryToRemove = currentCategories.find(category => {
+          return category.id === action.id;
+        });
+        categoryIndex = currentCategories.indexOf(categoryToRemove);
+        currentCategories.splice(categoryIndex, 1);
+        return Object.assign(newState, state, {categories: currentCategories});
+    }
+  }
