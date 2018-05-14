@@ -3,7 +3,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {BrowserRouter, Route} from 'react-router-dom';
 
-import categoryAppReducer from '../reducer/category-app.jsx';
+import categoryAppReducer from '../reducers/category-reducer.jsx';
 
 const store = createStore(categoryAppReducer);
 

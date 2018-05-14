@@ -26623,6 +26623,40 @@ module.exports = function(originalModule) {
 
 /***/ }),
 
+/***/ "./src/actions/category-actions.jsx":
+/*!******************************************!*\
+  !*** ./src/actions/category-actions.jsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.categoryCreate = categoryCreate;
+exports.categoryUpdate = categoryUpdate;
+exports.categoryDestroy = categoryDestroy;
+var CATEGORY_CREATE = exports.CATEGORY_CREATE = 'CATEGORY_CREATE';
+var CATEGORY_UPDATE = exports.CATEGORY_UPDATE = 'CATEGORY_UPDATE';
+var CATEGORY_DESTROY = exports.CATEGORY_DESTROY = 'CATEGORY_DESTROY';
+
+function categoryCreate(value) {
+    return { type: CATEGORY_CREATE, value: value };
+}
+
+function categoryUpdate(value) {
+    return { type: CATEGORY_UPDATE, value: value };
+}
+
+function categoryDestroy(id) {
+    return { type: CATEGORY_DESTROY, id: id };
+}
+
+/***/ }),
+
 /***/ "./src/components/app.jsx":
 /*!********************************!*\
   !*** ./src/components/app.jsx ***!
@@ -26634,7 +26668,7 @@ module.exports = function(originalModule) {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26649,9 +26683,9 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
-var _categoryReducer = __webpack_require__(/*! ../reducers/category-reducer.jsx */ "./src/reducers/category-reducer.jsx");
+var _categoryApp = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../reducers/category-app.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
-var _categoryReducer2 = _interopRequireDefault(_categoryReducer);
+var _categoryApp2 = _interopRequireDefault(_categoryApp);
 
 var _dashboard = __webpack_require__(/*! ./dashboard.jsx */ "./src/components/dashboard.jsx");
 
@@ -26665,36 +26699,397 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var store = (0, _redux.createStore)(_categoryReducer2.default);
+var store = (0, _redux.createStore)(_categoryApp2.default);
 
 var App = function (_React$Component) {
-	_inherits(App, _React$Component);
+    _inherits(App, _React$Component);
 
-	function App() {
-		_classCallCheck(this, App);
+    function App() {
+        _classCallCheck(this, App);
 
-		return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-	}
+        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    }
 
-	_createClass(App, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				_reactRedux.Provider,
-				{ store: store },
-				_react2.default.createElement(
-					_reactRouterDom.BrowserRouter,
-					null,
-					_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _dashboard2.default })
-				)
-			);
-		}
-	}]);
+    _createClass(App, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                _reactRedux.Provider,
+                { store: store },
+                _react2.default.createElement(
+                    _reactRouterDom.BrowserRouter,
+                    null,
+                    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _dashboard2.default })
+                )
+            );
+        }
+    }]);
 
-	return App;
+    return App;
 }(_react2.default.Component);
 
 exports.default = App;
+
+/***/ }),
+
+/***/ "./src/components/category-form.jsx":
+/*!******************************************!*\
+  !*** ./src/components/category-form.jsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _categoryActions = __webpack_require__(/*! ../actions/category-actions.jsx */ "./src/actions/category-actions.jsx");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CategoryForm = function (_React$Component) {
+    _inherits(CategoryForm, _React$Component);
+
+    function CategoryForm(props) {
+        _classCallCheck(this, CategoryForm);
+
+        var _this = _possibleConstructorReturn(this, (CategoryForm.__proto__ || Object.getPrototypeOf(CategoryForm)).call(this, props));
+
+        _this.state = {
+            name: '',
+            budget: 0,
+            isEditing: false
+        };
+        _this.handleNameChange = _this.handleNameChange.bind(_this);
+        _this.handleBudgetChange = _this.handleBudgetChange.bind(_this);
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(CategoryForm, [{
+        key: 'handleNameChange',
+        value: function handleNameChange(event) {
+            var newState = {
+                name: event.target.value
+            };
+            this.setState(newState);
+        }
+    }, {
+        key: 'handleBudgetChange',
+        value: function handleBudgetChange(event) {
+            var newState = {
+                budget: event.target.value
+            };
+            this.setState(newState);
+        }
+    }, {
+        key: 'handleSubmit',
+        value: function handleSubmit(event) {
+            var submitFormName = this.props.name;
+            event.preventDefault();
+            if (this.props.name === 'create') {
+                this.props.categoryCreate(this.state);
+            } else if (this.props.name === 'update') {
+                var newValue = Object.assign(this.state, { isEditing: false, id: this.props.id });
+                this.props.categoryUpdate(this.state);
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'form',
+                { onSubmit: this.handleSubmit },
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    'Enter a new Budget Item'
+                ),
+                _react2.default.createElement('input', { onChange: this.handleNameChange, type: 'text', placeholder: 'category name', required: 'true' }),
+                _react2.default.createElement('input', { onChange: this.handleBudgetChange, name: 'budget', type: 'text', placeholder: 'budget', required: 'true' }),
+                _react2.default.createElement(
+                    'button',
+                    { type: 'submit' },
+                    'Submit'
+                )
+            );
+        }
+    }]);
+
+    return CategoryForm;
+}(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        categories: state.categories
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, getState) {
+    return {
+        categoryCreate: function categoryCreate(value) {
+            return dispatch((0, _categoryActions.categoryCreate)(value));
+        },
+        categoryUpdate: function categoryUpdate(value) {
+            return dispatch((0, _categoryActions.categoryUpdate)(value));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(CategoryForm);
+
+/***/ }),
+
+/***/ "./src/components/category-item.jsx":
+/*!******************************************!*\
+  !*** ./src/components/category-item.jsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _categoryActions = __webpack_require__(/*! ../actions/category-actions.jsx */ "./src/actions/category-actions.jsx");
+
+var _categoryForm = __webpack_require__(/*! ./category-form.jsx */ "./src/components/category-form.jsx");
+
+var _categoryForm2 = _interopRequireDefault(_categoryForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CategoryItem = function (_React$Component) {
+    _inherits(CategoryItem, _React$Component);
+
+    function CategoryItem(props) {
+        _classCallCheck(this, CategoryItem);
+
+        var _this = _possibleConstructorReturn(this, (CategoryItem.__proto__ || Object.getPrototypeOf(CategoryItem)).call(this, props));
+
+        _this.handleRemove = _this.handleRemove.bind(_this);
+        _this.toggleEdit = _this.toggleEdit.bind(_this);
+        _this.toggleEditOff = _this.toggleEditOff.bind(_this);
+        return _this;
+    }
+
+    _createClass(CategoryItem, [{
+        key: 'toggleEdit',
+        value: function toggleEdit(event, id) {
+            this.props.categoryUpdate({ isEditing: true, id: id });
+        }
+    }, {
+        key: 'toggleEditOff',
+        value: function toggleEditOff(event, id) {
+            this.props.categoryUpdate({ isEditing: false, id: id });
+        }
+    }, {
+        key: 'handleRemove',
+        value: function handleRemove(event, id) {
+            event.preventDefault();
+            // let id = event.target.id;
+            this.props.categoryDestroy(id);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var categoryId = this.props.id;
+            if (this.props.isEditing === true) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(_categoryForm2.default, { id: this.props.id, name: 'update' }),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: function onClick(event) {
+                                return _this2.toggleEditOff(event, categoryId);
+                            } },
+                        'Cancel'
+                    )
+                );
+            }
+            return _react2.default.createElement(
+                'li',
+                { key: this.props.key },
+                this.props.name,
+                ': $',
+                this.props.budget,
+                _react2.default.createElement(
+                    'button',
+                    { onClick: function onClick(event) {
+                            return _this2.handleRemove(event, categoryId);
+                        } },
+                    'Remove'
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { onClick: function onClick(event) {
+                            return _this2.toggleEdit(event, categoryId);
+                        } },
+                    'Edit'
+                )
+            );
+        }
+    }]);
+
+    return CategoryItem;
+}(_react2.default.Component);
+
+var mapSateToProps = function mapSateToProps(state) {
+    return {
+        categories: state.categories
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, getState) {
+    return {
+        categoryUpdate: function categoryUpdate(values) {
+            return dispatch((0, _categoryActions.categoryUpdate)(values));
+        },
+        categoryDestroy: function categoryDestroy(id) {
+            return dispatch((0, _categoryActions.categoryDestroy)(id));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapSateToProps, mapDispatchToProps)(CategoryItem);
+
+/***/ }),
+
+/***/ "./src/components/category-list.jsx":
+/*!******************************************!*\
+  !*** ./src/components/category-list.jsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _categoryItem = __webpack_require__(/*! ./category-item.jsx */ "./src/components/category-item.jsx");
+
+var _categoryItem2 = _interopRequireDefault(_categoryItem);
+
+var _categoryActions = __webpack_require__(/*! ../actions/category-actions.jsx */ "./src/actions/category-actions.jsx");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CategoryList = function (_React$Component) {
+    _inherits(CategoryList, _React$Component);
+
+    function CategoryList(props) {
+        _classCallCheck(this, CategoryList);
+
+        var _this = _possibleConstructorReturn(this, (CategoryList.__proto__ || Object.getPrototypeOf(CategoryList)).call(this, props));
+
+        _this.displayAll = _this.displayAll.bind(_this);
+        return _this;
+    }
+
+    _createClass(CategoryList, [{
+        key: 'displayAll',
+        value: function displayAll() {
+            return this.props.categories.map(function (category) {
+                return _react2.default.createElement(_categoryItem2.default, {
+                    key: category.id,
+                    id: category.id,
+                    name: category.name,
+                    budget: category.budget,
+                    isEditing: category.isEditing });
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    'budget:'
+                ),
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    this.displayAll()
+                )
+            );
+        }
+    }]);
+
+    return CategoryList;
+}(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        categories: state.categories
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, getState) {
+    return {
+        categoryCreate: function categoryCreate(value) {
+            return dispatch((0, _categoryActions.categoryCreate)(value));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(CategoryList);
 
 /***/ }),
 
@@ -26707,84 +27102,93 @@ exports.default = App;
 
 "use strict";
 
-//example from counter app
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-// import React from 'react'
-// import {connect} from 'react-redux';
-// import {
-//   increment,
-//   decrement,
-//   incrementBy,
-//   decrementBy,
-// } from '../actions/counter-actions';
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-// class Dashboard extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       incBy: 2,
-//       decBy: 2
-//     }
-//     this.handleChange = this.handleChange.bind(this);
-//   }
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-//   handleChange(ev) {
-//     console.log(ev.target.value);
-//     let newState = {
-//       [ev.target.name]: parseInt(ev.target.value, 10)
-//     };
-//     this.setState(newState);
-//   }
+var _react2 = _interopRequireDefault(_react);
 
-//   render() {
-//     return <div>
-//       <h1>{this.props.appName}</h1>
-//       <div>
-//         Data: {this.props.data}
-//       </div>
-//       <div>
-//         <button onClick={this.props.increment}>increment</button>
-//         <button onClick={this.props.decrement}>decrement</button>
-//       </div>
-//       <div>
-//         <button onClick={() => this.props.incrementBy(this.state.incBy)}>
-//           increment by
-//         </button>
-//         <input onChange={this.handleChange}
-//                name="incBy" type="number"
-//                value={this.state.incBy} />
-//       </div>
-//       <div>
-//         <button onClick={() => this.props.decrementBy(this.state.decBy)}>
-//           decrement by
-//         </button>
-//         <input onChange={this.handleChange}
-//                name="decBy" type="number"
-//                value={this.state.decBy} />
-//       </div>
-//     </div>
-//   }
-// }
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-// const mapStateToProps = state => ({
-//   data: state.data,
-//   appName: state.appName,
-// });
+var _categoryActions = __webpack_require__(/*! ../actions/category-actions.jsx */ "./src/actions/category-actions.jsx");
 
-// // TODO: find out what's up getState here.
-// const mapDispatchToProps = (dispatch, getState) => {
-//   return {
-//     increment: () => dispatch(increment()),
-//     decrement: () => dispatch(decrement()),
-//     incrementBy: (val) => dispatch(incrementBy(val)),
-//     decrementBy: (val) => dispatch(decrementBy(val)),
-//   }
-// };
+var _categoryList = __webpack_require__(/*! ./category-list.jsx */ "./src/components/category-list.jsx");
 
+var _categoryList2 = _interopRequireDefault(_categoryList);
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+var _categoryForm = __webpack_require__(/*! ./category-form.jsx */ "./src/components/category-form.jsx");
 
+var _categoryForm2 = _interopRequireDefault(_categoryForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Dashboard = function (_React$Component) {
+    _inherits(Dashboard, _React$Component);
+
+    function Dashboard(props) {
+        _classCallCheck(this, Dashboard);
+
+        return _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+    }
+
+    _createClass(Dashboard, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    this.props.addName
+                ),
+                _react2.default.createElement(_categoryForm2.default, { name: 'create', createCategory: this.props.createCategory }),
+                _react2.default.createElement(_categoryList2.default, { categories: this.props.categories,
+                    categoryUpdate: this.props.categoryUpdate,
+                    categoryDestroy: this.props.categoryDestroy
+                })
+            );
+        }
+    }]);
+
+    return Dashboard;
+}(_react2.default.Component);
+
+;
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        appName: state.appName,
+        categories: state.categories
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, getState) {
+    return {
+        categoryCreate: function categoryCreate(data) {
+            return dispatch((0, _categoryActions.categoryCreate)(data));
+        },
+        categoryUpdate: function categoryUpdate(data) {
+            return dispatch((0, _categoryActions.categoryUpdate)(data));
+        },
+        categoryDestroy: function categoryDestroy(data) {
+            return dispatch((0, _categoryActions.categoryDestroy)(data));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Dashboard);
 
 /***/ }),
 
@@ -26816,57 +27220,6 @@ var root = document.createElement('div');
 document.body.appendChild(root);
 
 _reactDom2.default.render(_react2.default.createElement(_app2.default, null), root);
-
-/***/ }),
-
-/***/ "./src/reducers/category-reducer.jsx":
-/*!*******************************************!*\
-  !*** ./src/reducers/category-reducer.jsx ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-//example from counter-app
-
-
-// import {
-//     INCREMENT,
-//     DECREMENT,
-//     INCREMENT_BY,
-//     DECREMENT_BY
-//   } from '../actions/counter-actions';
-
-//   const initialState = {
-//     appName: 'Counting',
-//     data: 0,
-//     // other state data that may not even necessarily be accessed
-//     // by the component we're using.
-//     dateCreated: new Date(),
-//     otherData: [{}, {}, {}],
-//     id: 'sdfgfsdgfasdfgfdgdf'
-//   };
-
-//   export default function counterReducer(state, action) {
-//     if (state === undefined) {
-//       return initialState;
-//     }
-
-//     let newState = {};
-//     switch(action.type) {
-//       case INCREMENT:
-//         return Object.assign(newState, state, {data: state.data + 1});
-//       case DECREMENT:
-//         return Object.assign(newState, state, {data: state.data - 1});
-//       case INCREMENT_BY:
-//         return Object.assign(newState, state, {data: state.data + action.value});
-//       case DECREMENT_BY:
-//         return Object.assign(newState, state, {data: state.data - action.value});
-//       default: return state;
-//     }
-//   }
-
 
 /***/ })
 

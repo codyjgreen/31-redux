@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
     categoryCreate,
     categoryUpdate,
-} from '../actions/category-actions.js'
+} from '../actions/category-actions.jsx'
 
 class CategoryForm extends React.Component {
     constructor(props) {
